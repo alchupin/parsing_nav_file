@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form method="GET" action=".">
+
+        <div>
+            <label for="altitudemin">Высота, м, минимальное значение</label>
+            <input type="number" step="0.1" min=0 class="form-control" id="altitudemin" placeholder={{ al_min }}
+                    name="altitude_min">
+        </div>
+        <div>
+            <label for="altitudemax">Высота, м, максимальное значение</label>
+            <input type="number" step="0.1" min=0 class="form-control" id="altitudemin" placeholder={{ al_max }}
+                    name="altitude_max">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Отфильтровать</button>
+    </form>
+
+
+    {% if qs %}
+        <table>
+            <caption><h3>Результаты замеров</h3></caption>
+            <col width="160">
+            <col width="160">
+            <col width="240">
+            <tr>
+                <th>Время замера</th>
+                <th>Координаты</th>
+                <th>Высота над уровнем моря, м</th>
+            </tr>
+            {% for data in qs %}
+                <tr>
+                    <td align="center">{{ data.get_time_humanized }}</td>
+                    <td align="center">{{ data.latitude }}</td>
+                    <td align="center">{{ data.altitude }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p><h1>Нет данных для отображения</h1></p>
+    {% endif %}
+{% endblock %}
