@@ -67,13 +67,13 @@ def find_min_max():
     Находит минимальное и максимальное значения высоты для всех записей в БД и выводит их в виде кортежа значений
     """
     qs = NavData.objects.all()
-    altitude_min = float(qs.aggregate(Min('altitude')).get('altitude__min'))
-    altitude_max = float(qs.aggregate(Max('altitude')).get('altitude__max'))
+    altitude_min = qs.aggregate(Min('altitude')).get('altitude__min')
+    altitude_max = qs.aggregate(Max('altitude')).get('altitude__max')
     if altitude_min is None or altitude_min == '':
         altitude_min = 0
     if altitude_max is None or altitude_max == '':
         altitude_max = 0
-    return altitude_min, altitude_max
+    return float(altitude_min), float(altitude_max)
 
 
 def display_results(request):
