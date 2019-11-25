@@ -2,12 +2,6 @@ from django.db import models
 
 
 class NavData(models.Model):
-    # DIR_CHOICES = (
-    #     ('N', 'North'),
-    #     ('E', 'East'),
-    #     ('S', 'South'),
-    #     ('W', 'West')
-    # )
     time_stamp = models.CharField(max_length=32, verbose_name='Время замера', blank=True)
 
     latitude_degrees = models.CharField(max_length=32, verbose_name='Широта, градусы', blank=True)
@@ -24,6 +18,9 @@ class NavData(models.Model):
 
     @property
     def get_time_humanized(self):
+        """
+        Возвращает время в человекочитаемом виде
+        """
         hours = self.time_stamp[:2]
         minutes = self.time_stamp[2:4]
         seconds = self.time_stamp[4:]
@@ -32,6 +29,9 @@ class NavData(models.Model):
 
     @property
     def get_coordinates(self):
+        """
+        Возвращает координаты в человекочитаемом виде
+        """
         degree = '\u00b0'
 
         return self.latitude_degrees + degree + self.latitude_minutes + '\'' + self.latitude_dir +\
