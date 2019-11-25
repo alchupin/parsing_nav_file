@@ -2,19 +2,24 @@ from django.db import models
 
 
 class NavData(models.Model):
-    DIR_CHOICES = (
-        ('N', 'North'),
-        ('E', 'East'),
-        ('S', 'South'),
-        ('W', 'West')
-    )
+    # DIR_CHOICES = (
+    #     ('N', 'North'),
+    #     ('E', 'East'),
+    #     ('S', 'South'),
+    #     ('W', 'West')
+    # )
     time_stamp = models.CharField(max_length=32, verbose_name='Время замера', blank=True)
-    latitude = models.CharField(max_length=32, verbose_name='Широта', blank=True)
-    lat_direction = models.CharField(max_length=2, choices=DIR_CHOICES, blank=True)
-    longitude = models.CharField(max_length=32, verbose_name='Долгота', blank=True)
-    long_direction = models.CharField(max_length=2, choices=DIR_CHOICES, blank=True)
-    altitude = models.CharField(max_length=32, blank=True)
-    speed = models.CharField(max_length=32, blank=True)
+
+    latitude_degrees = models.CharField(max_length=32, verbose_name='Широта, градусы', blank=True)
+    latitude_minutes = models.CharField(max_length=32, verbose_name='Широта, минуты', blank=True)
+    latitude_dir = models.CharField(max_length=2, blank=True)
+
+    longitude_degrees = models.CharField(max_length=32, verbose_name='Долгота, градусы', blank=True)
+    longitude_minutes = models.CharField(max_length=32, verbose_name='Долгота, минуты', blank=True)
+    longitude_dir = models.CharField(max_length=2, blank=True)
+
+    altitude = models.CharField(max_length=32, verbose_name='Высота на уровнем моря, м', blank=True)
+    speed = models.CharField(max_length=32, verbose_name='Скорость, узлы', blank=True, null=True)
 
 
     @property
@@ -22,15 +27,15 @@ class NavData(models.Model):
         hours = self.time_stamp[:2]
         minutes = self.time_stamp[2:4]
         seconds = self.time_stamp[4:]
+
         return str(hours) + ' ч. ' + str(minutes) + ' мин. ' + str(seconds) + ' c'
 
     @property
-    def get_latitude_humanized(self):
-        grad = self.latitude[:2]
-        minutes = self.latitude[2:]
+    def get_coordinates(self):
+        degree = '\u00b0'
 
-        if self.lat_direction == 'N':
-            return str(self.latitude) + ' северной широты'
+        return self.latitude_degrees + degree + self.latitude_minutes + '\'' + self.latitude_dir +\
+               self.longitude_degrees + degree + self.longitude_minutes + '\'' + self.longitude_dir
 
 
 

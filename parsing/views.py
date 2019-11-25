@@ -32,11 +32,16 @@ def parsing_nav_file(file):
                 list_data = line.split(',')
                 nd = NavData.objects.create(
                     time_stamp=list_data[1].split('.')[0],
-                    latitude=str(list_data[2][:2]),
-                    altitude=float(list_data[8])
+                    latitude_degrees=list_data[2][:2],
+                    latitude_minutes=list_data[2][2:],
+                    latitude_dir=list_data[3],
+                    longitude_degrees=list_data[4][:2],
+                    longitude_minutes=list_data[4][2:],
+                    longitude_dir=list_data[5],
+                    altitude=list_data[9]
                 )
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
 
 def filter_qs(request):
@@ -62,6 +67,10 @@ def find_min_max():
     qs = NavData.objects.all()
     altitude_min = qs.aggregate(Min('altitude')).get('altitude__min')
     altitude_max = qs.aggregate(Max('altitude')).get('altitude__max')
+    if altitude_min is None or altitude_min == '':
+        altitude_min = 0
+    if altitude_max is None or altitude_max == '':
+        altitude_max = 0
     return altitude_min, altitude_max
 
 

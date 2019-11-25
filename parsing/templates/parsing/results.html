@@ -33,7 +33,7 @@
             {% for data in qs %}
                 <tr>
                     <td align="center">{{ data.get_time_humanized }}</td>
-                    <td align="center">{{ data.latitude }}</td>
+                    <td align="center">{{ data.get_coordinates }}</td>
                     <td align="center">{{ data.altitude }}</td>
                 </tr>
             {% endfor %}
