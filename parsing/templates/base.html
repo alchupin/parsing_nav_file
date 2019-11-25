@@ -1,5 +1,24 @@
 {% load static %}
 
+<table>
+    <col width="180">
+    <col width="180">
+<tr>
+    <td>
+        <form>
+            <button formaction="{% url 'upload' %}">Загрузить данные</button>
+        </form>
+    </td>
+    <td>
+        <form>
+            <button formaction="{% url 'display_results' %}">Отобразить данные</button>
+        </form>
+    </td>
+</tr>
+</table>
+<br>
+<br>
+
 {% block content %}
 
 {% endblock %}

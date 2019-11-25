@@ -1,3 +1,5 @@
+from _decimal import Decimal
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.db.models import Min, Max
@@ -38,7 +40,7 @@ def parsing_nav_file(file):
                     longitude_degrees=list_data[4][:2],
                     longitude_minutes=list_data[4][2:],
                     longitude_dir=list_data[5],
-                    altitude=list_data[9]
+                    altitude=Decimal(list_data[9])
                 )
         except Exception as e:
             print(e)
@@ -65,8 +67,8 @@ def find_min_max():
     Находит минимальное и максимальное значения высоты для всех записей в БД и выводит их в виде кортежа значений
     """
     qs = NavData.objects.all()
-    altitude_min = qs.aggregate(Min('altitude')).get('altitude__min')
-    altitude_max = qs.aggregate(Max('altitude')).get('altitude__max')
+    altitude_min = float(qs.aggregate(Min('altitude')).get('altitude__min'))
+    altitude_max = float(qs.aggregate(Max('altitude')).get('altitude__max'))
     if altitude_min is None or altitude_min == '':
         altitude_min = 0
     if altitude_max is None or altitude_max == '':
