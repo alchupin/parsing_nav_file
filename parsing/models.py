@@ -12,9 +12,8 @@ class NavData(models.Model):
     longitude_minutes = models.CharField(max_length=32, verbose_name='Долгота, минуты', blank=True)
     longitude_dir = models.CharField(max_length=2, blank=True)
 
-    altitude = models.DecimalField(max_digits=8, decimal_places=1, verbose_name='Высота на уровнем моря, м', blank=True)
-    speed = models.CharField(max_length=32, verbose_name='Скорость, узлы', blank=True, null=True)
-
+    altitude = models.DecimalField(max_digits=8, decimal_places=1, verbose_name='Высота над уровнем моря, м', blank=True)
+    speed = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Скорость, узлы', blank=True)
 
     @property
     def get_time_humanized(self):

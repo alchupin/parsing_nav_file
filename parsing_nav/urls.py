@@ -19,7 +19,7 @@ from django.urls import path
 from parsing.views import upload, display_results
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('upload/', upload, name='upload'),
     path('results/', display_results, name='display_results'),
-    path('admin/', admin.site.urls),
 ]
